@@ -3,7 +3,7 @@ from datetime import datetime
 import pytz
 import tzlocal  # to detect local timezone
 
-# --- Define city names and their timezone strings ---
+# Define city names and their timezone strings 
 CITIES = {
     "Delhi 🇮🇳": "Asia/Kolkata",
     "London 🇬🇧": "Europe/London",
@@ -15,17 +15,17 @@ CITIES = {
    "Paris 🇫🇷": "Europe/Paris"
 }
 
-# --- Detect local timezone safely ---
+# Detect local timezone safely 
 local_tz_obj = tzlocal.get_localzone()
 local_tz = getattr(local_tz_obj, "zone", str(local_tz_obj))
 
-# --- Create the main window ---
+# Create the main window 
 root = tk.Tk()
 root.title("🌍 World Clock")
 root.geometry("640x480")
 root.resizable(False, False)
 
-# --- Create gradient background using Canvas ---
+# Create gradient background using Canvas 
 canvas = tk.Canvas(root, width=640, height=480)
 canvas.pack(fill="both", expand=True)
 
@@ -43,16 +43,16 @@ def draw_gradient():
 
 draw_gradient()
 
-# --- Title Label ---
+# Title Label 
 title = tk.Label(root, text="🌎 World Clock", font=("Segoe UI", 22, "bold"),
                  fg="#00d4ff", bg="#1a1a40")
 canvas.create_window(320, 30, window=title)
 
-# --- Frame for city clocks ---
+# Frame for city clocks 
 frame = tk.Frame(root, bg="#000000", highlightthickness=0)
 canvas.create_window(320, 240, window=frame)
 
-# --- Create labels for each city (fixed alignment) ---
+# Create labels for each city (fixed alignment) 
 labels = {}
 for i, (city, tz) in enumerate(CITIES.items()):
     is_local = (tz == local_tz)
@@ -84,10 +84,10 @@ for i, (city, tz) in enumerate(CITIES.items()):
 
     labels[city] = (time_label, tz)
 
-# --- Time format state (12 or 24 hour) ---
+# Time format state (12 or 24 hour) 
 is_24hr = tk.BooleanVar(value=False)
 
-# --- Function to update all clocks ---
+# Function to update all clocks 
 def update_time():
     fmt_12 = "%I:%M:%S %p"
     fmt_24 = "%H:%M:%S"
@@ -100,14 +100,14 @@ def update_time():
         label.config(text=formatted_time)
     root.after(1000, update_time)  # update every second
 
-# --- Toggle format function ---
+# Toggle format function 
 def toggle_format():
     is_24hr.set(not is_24hr.get())
     format_btn.config(
         text="12-Hour" if is_24hr.get() else "24-Hour"
     )
 
-# --- Button for toggling format ---
+# Button for toggling format 
 format_btn = tk.Button(
     root,
     text="24 hrs",
@@ -122,16 +122,17 @@ format_btn = tk.Button(
 )
 canvas.create_window(580, 450, window=format_btn)  # Moved to right bottom
 
-# --- Start updating ---
+# Start updating 
 update_time()
 
-# --- Footer ---
+# Footer 
 footer = tk.Label(root, text="Auto-updating every second  |  Toggle 12H / 24H  |  Gradient background",
                   font=("Segoe UI", 9), fg="#aaaaaa", bg="#000000")
 canvas.create_window(320, 460, window=footer)
 
-# --- Run the app ---
+# Run the app 
 root.mainloop()
+
 
 
 
